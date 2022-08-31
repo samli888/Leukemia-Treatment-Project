@@ -1,5 +1,24 @@
 function [x,y,x_hat_p,u] = simulate_system(N,n,m,A,b,C,xi,Q,nn,R,W,rho,lambda,x_o,is_controlled)
 
+%
+% N = number of steps to simulate
+% n = measurement noise
+% A = state matrix (ok)
+% b = control matrix (ok)
+% C = observation matrix (ok)
+% xi = system noise/disturbance ( x(k+1) = ... + xi )
+% Q = state noise covariance matrix (requires variance of noise)
+% nn = measurement noise
+% R = state covariance matrix
+% W = (matrix related to cost function)
+% rho = (cost function)
+% lambda = (cost function)
+% x_o = state at time zero
+% is_controlled = is the system controlled? 1
+
+
+
+
 % Initialize state vector x
 x = zeros([n 1 N]);
 %x_o = [100;0;-10];

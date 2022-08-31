@@ -61,6 +61,7 @@ A_nominal = zeros([n n N]);
 b_nominal = zeros([n N]);
 u_start = 0;
 u_end = 5;
+
 u_nominal = zeros([1 N]);
 x_nominal = zeros([n 1 N]);
 for iter = 1:N

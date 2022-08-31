@@ -49,20 +49,7 @@ for k = 1:N
         else
             x_hat_km1 = reshape(x_hat_p(:,:,k-1),[n 1]);
         end
-%         for j = k:N
-%             if j == k
-%                 x_tmp = x_hat_km1;
-%             else
-%                 x_tmp = x_nominal(:,:,j-1);
-%             end
-%             [A_new,b_new,~] = c2d_invpend(x1_sym,x2_sym,x3_sym,x4_sym,u_sym,dfdx,dfdu,dgdx,x_tmp,u_nominal(:,j),t_s);
-%             A_nominal_new(:,:,j) = A_new;
-%             b_nominal_new(:,j) = b_new;
-%             x_nominal(:,:,j) = A_new * x_tmp + b_new * u_nominal(:,j);
-%         end
-%         [K_tilda,p_tilda,mu] = solve_riccati(N,n,W,rho,lambda,A_nominal,b_nominal);
-
-% 2
+        
         delta_x_hat_km1 = x_hat_km1 - rho(:,:,k);
         delta_u = calc_control(A_nominal,b_nominal,K_tilda,p_tilda,mu,delta_x_hat_km1,k);
         u(:,k) = u_nominal(:,k) + delta_u;
@@ -71,12 +58,6 @@ for k = 1:N
     % Compute linearized c2d-ed state matrices, we use this to simulate the
     % system because we do not know the discrete time nonlinear equation
     % for the inverse pendulum problem
-%     if k == 1
-%         x_tmp = x_o;
-%     else
-%         x_tmp = x(:,:,k-1);
-%     end
-%     [A_actual,b_actual,C_actual] = c2d_invpend(x1_sym,x2_sym,x3_sym,x4_sym,u_sym,dfdx,dfdu,dgdx,x_tmp,u(:,k),t_s);
 
     % Kalman Filter Prediction
     if k == 1
