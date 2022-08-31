@@ -14,7 +14,7 @@ function [x,y,x_hat_p,u] = simulate_system(N,n,m,A,b,C,xi,Q,nn,R,W,rho,lambda,x_
 % rho = (cost function)
 % lambda = (cost function)
 % x_o = state at time zero
-% is_controlled = is the system controlled?
+% is_controlled = is the system controlled? 1
 
 
 
