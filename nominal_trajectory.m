@@ -262,6 +262,7 @@ x0 = [0;...
 num_cycles = 34;
 
 %% 2.2 Calculation of reference trajectory for 5 cycles
+
 x_ref = [];
 t_ref = [];
 u_ref = [];
@@ -301,6 +302,7 @@ end
 clear i;
 
 %% 2.3 Plot of 6-MP trajectory
+
 figure()
 hold on
 xlabel('Days Elapsed')
@@ -313,6 +315,7 @@ legend("x_1 6-MP in the gut (mg)","x_2 6-MP in the bloodstream (mg)","x_3 6-TGN 
 hold off
 
 %% 2.4 Plot of number of proliferating cells, number of cells in each compartment, and number of mature neutrophils
+
 figure()
 hold on
 xlabel('Days Elapsed')
@@ -328,6 +331,7 @@ hold off
 
 
 %% 2.5 Plot of neutrophil trajectory (color-coded by cycle)
+
 figure()
 hold on
 xlabel('Days Elapsed')
@@ -343,6 +347,7 @@ hold off
 clear i;
 
 %% 2.6 Linearization
+
 bsa = 1.71; % trajectory near original bsa
 theta = [31.2;12.72;0.019;9.9216;0.219*(bsa^1.16);2.06;0.146;0.103;0.866;2.3765];
 x_lin = [];
@@ -436,6 +441,7 @@ hold off
 clear i j x_lin_j x0_i u_i tspan;
 
 %% 2.7.1 Trajectory with Noise; Setup
+
 num_cycles = 7; %34
 
 step_size_noisy = step_size_ref;
@@ -509,7 +515,12 @@ legend("Noisy","Original","Desired lower bound","Desired upper bound","Location"
 hold off
 
 figure()
-plot(t_noisy_r_flattened,u_noisy_r_flattened*1e9)
+hold on
+title("Noisy model reactive controller control sequence")
+plot(t_noisy_r_flattened,u_noisy_r_flattened)
+xlabel("Time elapsed (days)")
+ylabel("Input dosage (mg)")
+hold off
 
 toc
 
@@ -666,8 +677,23 @@ hold on
 plot(time,rho8_plot)
 legend('reactive','KF','nominal')
 
+
 figure()
+hold on
+title("Noisy model KF controller control sequence")
 plot(time(1:N),u_c)
-legend('control sequence')
+xlabel("Time elapsed (days)")
+ylabel("Input dosage (mg)")
+hold off
+
+figure()
+hold on
+title("Noisy model control sequence comparison")
+plot(t_noisy_r_flattened,u_noisy_r_flattened*1e9)
+plot(time(1:N),u_c)
+legend('reactive control sequence','KF control sequence')
+xlabel("Time elapsed (days)")
+ylabel("Input dosage (mg)")
+hold off
 
 toc
