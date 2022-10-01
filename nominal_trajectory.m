@@ -446,6 +446,8 @@ var_w = 0.01; % TODO: change this
 var_v = 0.774341747; % CHECK if documented
 
 %% 2.7.2 Trajectory with Noise; Reactive Controller
+tic
+
 u_i = 50*bsa;
 x0_i = x0;
 
@@ -457,7 +459,8 @@ u_noisy_r = [];
 
 
 for i=1:num_cycles
-    u_noisy_r = [u_noisy_r u_i];
+    u_i_all = [transpose(repelem(u_i,(1/step_size_noisy)*14));transpose(repelem(0,(1/step_size_noisy)*(21-14)+1))];
+    u_noisy_r = [u_noisy_r u_i_all];
     [t_i,x_i] = ode45(@(t,x)jost_noisy(t,x,u_i,theta,step_size_noisy,var_w),tspan,x0_i);
     t_i = t_i + 20*(i-1); % shift the time index to the current cycle
     
@@ -508,9 +511,10 @@ hold off
 figure()
 plot(t_noisy_r_flattened,u_noisy_r_flattened*1e9)
 
-
+toc
 
 %% 2.7.3 Trajectory with Noise; KF Controller
+tic
 
 % Simu_symlation Length
 t_s = step_size_noisy;
@@ -665,3 +669,5 @@ legend('reactive','KF','nominal')
 figure()
 plot(time(1:N),u_c)
 legend('control sequence')
+
+toc
